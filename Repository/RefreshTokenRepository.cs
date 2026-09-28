@@ -36,11 +36,14 @@ namespace JWTAuthenticationAPI.Repository
 
         public async Task<RefreshToken?> GetByTokenAsync(string tokenHash)
         {
-            const string query = "SELECT * FROM RefreshTokens WHERE Token = @Token";
+            const string query = @"
+                SELECT Id, UserId, Token, IsRevoked, CreatedAt, ExpiresAt
+                FROM RefreshTokens
+                WHERE Token = @Token";
 
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@Token", tokenHash);
+            cmd.Parameters.Add("@Token", SqlDbType.NVarChar, 256).Value = tokenHash;
 
             await conn.OpenAsync();
             using var reader = await cmd.ExecuteReaderAsync();

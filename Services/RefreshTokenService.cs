@@ -1,4 +1,5 @@
-﻿using JWTAuthenticationAPI.JWT.CVPilotAPI.Services;
+using JWTAuthenticationAPI.Exceptions;
+using JWTAuthenticationAPI.JWT;
 using JWTAuthenticationAPI.Models;
 using JWTAuthenticationAPI.Repository;
 using System.Security.Cryptography;
@@ -20,12 +21,12 @@ namespace JWTAuthenticationAPI.Services
             _Jwt = jwt;
 
             var days = _con["JWT:RefreshTokenDays"]
-                  ?? throw new Exception("AppSettingjson not configure properly");
+                  ?? throw new InvalidOperationException("JWT:RefreshTokenDays is not configured in appsettings.json");
 
             _refreshTokenDays = int.Parse(days);
         }
 
-        public async Task<string> GenrateAccess(string email, int Id)
+        public async Task<string> GenerateAccessTokenAsync(string email, int Id)
         {
             return _Jwt.GenerateAccessToken(email, Id);
         }
@@ -47,6 +48,7 @@ namespace JWTAuthenticationAPI.Services
             await _repo.CreateAsync(entity);
             return rawToken;
         }
+
         private async Task<RefreshToken?> ValidateAsync(string rawToken)
         {
             if (string.IsNullOrWhiteSpace(rawToken))
@@ -64,12 +66,26 @@ namespace JWTAuthenticationAPI.Services
             return stored;
         }
 
+        public async Task<RefreshToken> GetTokenByTokenAsync(string rawToken)
+        {
+            if (string.IsNullOrWhiteSpace(rawToken))
+                throw new BadRequestException("Refresh token is required.");
+
+            var hashed = Hash(rawToken);
+            var refreshToken = await _repo.GetByTokenAsync(hashed);
+            if (refreshToken == null)
+            {
+                throw new NotFoundException("Token Not Found In DB");
+            }
+            return refreshToken;
+        }
+
         public async Task<string> RotateAsync(string oldRawToken)
         {
             var stored = await ValidateAsync(oldRawToken);
 
             if (stored == null)
-                throw new Exception("Token Not Found In Data Base");
+                throw new UnauthorizedException("Token Is Invalid Or Expired");
 
             await RevokeAsync(oldRawToken);
             return await GenerateAndStoreAsync(stored.UserId);
@@ -79,7 +95,7 @@ namespace JWTAuthenticationAPI.Services
         {
             if (string.IsNullOrWhiteSpace(rawToken))
             {
-                throw new Exception($"Token is Invalid");
+                throw new BadRequestException("Refresh token is required.");
             }
             var hashed = Hash(rawToken);
             await _repo.RevokeAsync(hashed);

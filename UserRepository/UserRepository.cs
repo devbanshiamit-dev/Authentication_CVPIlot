@@ -62,6 +62,7 @@ namespace JWTAuthenticationAPI.Repository
             return new User
             {
                 UserId = reader.GetInt32(reader.GetOrdinal("Id")),
+                Name = reader.GetString(reader.GetOrdinal("Name")),
                 Email = reader.GetString(reader.GetOrdinal("Email")),
                 PasswordHash = reader.GetString(reader.GetOrdinal("PasswordHash")),
                 CreatedAt = reader.GetDateTime(reader.GetOrdinal("CreatedAt"))

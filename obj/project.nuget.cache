@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "RncPF4ATBSg=",
+  "dgSpecHash": "Rq9GI+dZHw4=",
   "success": true,
   "projectFilePath": "C:\\Users\\Lenovo\\source\\repos\\JWTAuthenticationAPI\\JWTAuthenticationAPI\\JWTAuthenticationAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Lenovo\\.nuget\\packages\\bcrypt.net-next\\4.2.0\\bcrypt.net-next.4.2.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\10.0.12\\microsoft.aspnetcore.authentication.jwtbearer.10.0.12.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.12\\microsoft.aspnetcore.openapi.10.0.12.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.bcl.cryptography\\10.0.2\\microsoft.bcl.cryptography.10.0.2.nupkg.sha512",

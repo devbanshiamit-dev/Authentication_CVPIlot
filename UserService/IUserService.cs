@@ -1,14 +1,15 @@
-﻿using JWTAuthenticationAPI.Models;
+﻿using JWTAuthenticationAPI.DTOs;
+using JWTAuthenticationAPI.Models;
 
 namespace JWTAuthenticationAPI.UserService
 {
     public interface IUserService
     {
-        Task<int> RegisterAsync(User user);
-        Task<User?> GetByIdAsync(int id);
-        Task<User?> GetByEmailAsync(string email);
-        Task<bool> ExistsByEmailAsync(string email);
-        Task<string> GenerateRefreshTokenAsync(int userId);
+        Task<ServerResponse> RegisterAsync(UserRegistreRequest user);
+        Task<ServerResponse> LoginRequestAsync(UserLoginRequest dto);
+        Task<ServerResponse> RotateTokensAsync(TokenRequestDTO dTO);
+        Task<string> GetAccessTokenAsync(string refreshToken);
+        Task RevokeToken(string refreshToken);
         Task RevokeAllRefreshTokensAsync(int userId);
     }
 }
