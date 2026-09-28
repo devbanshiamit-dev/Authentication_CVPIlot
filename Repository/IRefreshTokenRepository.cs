@@ -6,8 +6,7 @@ namespace JWTAuthenticationAPI.Repository
     {
         Task<int> CreateAsync(RefreshToken token);
         Task<RefreshToken?> GetByTokenAsync(string tokenHash);
-        Task RevokeAsync(string tokenHash, string revokedByIp);
-        Task MarkUsedAsync(string tokenHash);
-        Task RevokeAllForUserAsync(Guid userId);
+        Task RevokeAsync(string tokenHash);
+        Task RevokeAllForUserAsync(int userId);
     }
 }

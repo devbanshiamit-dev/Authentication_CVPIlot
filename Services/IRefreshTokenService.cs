@@ -2,10 +2,10 @@
 {
     public interface IRefreshTokenService
     {
-        Task<string> GenerateAndStoreAsync(Guid userId, string jwtId, string? ipAddress);
-        Task<(bool IsValid, Guid? UserId)> ValidateAsync(string rawToken);
-        Task<string> RotateAsync(string oldRawToken, string newJwtId, string? ipAddress);
-        Task RevokeAsync(string rawToken, string? ipAddress);
-        Task RevokeAllForUserAsync(Guid userId);
+        Task<string> GenrateAccess(string email, int Id);
+        Task<string> GenerateAndStoreAsync(int userId);
+        Task<string> RotateAsync(string oldRawToken);
+        Task RevokeAsync(string rawToken);
+        Task RevokeAllForUserAsync(int userId);
     }
 }

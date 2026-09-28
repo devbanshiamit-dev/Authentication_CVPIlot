@@ -16,8 +16,8 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="DTOs\" />
-    <Folder Include="JWT\" />
     <Folder Include="Middlewares\" />
+    <Folder Include="UserRepository\" />
   </ItemGroup>
 
 </Project>

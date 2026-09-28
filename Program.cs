@@ -1,3 +1,4 @@
+using JWTAuthenticationAPI.JWT.CVPilotAPI.Services;
 using JWTAuthenticationAPI.Repository;
 using JWTAuthenticationAPI.Services;
 
@@ -10,6 +11,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+builder.Services.AddScoped<JWTService>();
 
 var app = builder.Build();
 

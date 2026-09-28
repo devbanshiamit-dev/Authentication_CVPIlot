@@ -1,5 +1,6 @@
 ﻿using JWTAuthenticationAPI.Models;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace JWTAuthenticationAPI.Repository
 {
@@ -16,21 +17,17 @@ namespace JWTAuthenticationAPI.Repository
         public async Task<int> CreateAsync(RefreshToken token)
         {
             const string query = @"
-            INSERT INTO RefreshTokens (UserId, Token, JwtId, IsUsed, IsRevoked, CreatedAt, ExpiresAt, CreatedByIp)
+            INSERT INTO RefreshTokens (UserId, Token, IsRevoked, ExpiresAt)
             OUTPUT INSERTED.Id
-            VALUES (@UserId, @Token, @JwtId, @IsUsed, @IsRevoked, @CreatedAt, @ExpiresAt, @CreatedByIp)";
+            VALUES (@UserId, @Token, @IsRevoked, @ExpiresAt)";
 
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(query, conn);
 
-            cmd.Parameters.AddWithValue("@UserId", token.UserId);
-            cmd.Parameters.AddWithValue("@Token", token.Token);
-            cmd.Parameters.AddWithValue("@JwtId", token.JwtId);
-            cmd.Parameters.AddWithValue("@IsUsed", token.IsUsed);
-            cmd.Parameters.AddWithValue("@IsRevoked", token.IsRevoked);
-            cmd.Parameters.AddWithValue("@CreatedAt", token.CreatedAt);
-            cmd.Parameters.AddWithValue("@ExpiresAt", token.ExpiresAt);
-            cmd.Parameters.AddWithValue("@CreatedByIp", (object?)token.CreatedByIp ?? DBNull.Value);
+            cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = token.UserId;
+            cmd.Parameters.Add("@Token", SqlDbType.NVarChar, 256).Value = token.Token;
+            cmd.Parameters.Add("@IsRevoked", SqlDbType.Bit).Value = token.IsRevoked;
+            cmd.Parameters.Add("@ExpiresAt", SqlDbType.DateTime).Value = token.ExpiresAt;
 
             await conn.OpenAsync();
             var id = await cmd.ExecuteScalarAsync();
@@ -53,49 +50,32 @@ namespace JWTAuthenticationAPI.Repository
                 return new RefreshToken
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                    UserId = reader.GetGuid(reader.GetOrdinal("UserId")),
+                    UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
                     Token = reader.GetString(reader.GetOrdinal("Token")),
-                    JwtId = reader.GetString(reader.GetOrdinal("JwtId")),
-                    IsUsed = reader.GetBoolean(reader.GetOrdinal("IsUsed")),
                     IsRevoked = reader.GetBoolean(reader.GetOrdinal("IsRevoked")),
                     CreatedAt = reader.GetDateTime(reader.GetOrdinal("CreatedAt")),
                     ExpiresAt = reader.GetDateTime(reader.GetOrdinal("ExpiresAt")),
-                    CreatedByIp = reader.IsDBNull(reader.GetOrdinal("CreatedByIp")) ? null : reader.GetString(reader.GetOrdinal("CreatedByIp")),
-                    RevokedByIp = reader.IsDBNull(reader.GetOrdinal("RevokedByIp")) ? null : reader.GetString(reader.GetOrdinal("RevokedByIp"))
                 };
             }
             return null;
         }
 
-        public async Task RevokeAsync(string tokenHash, string revokedByIp)
+        public async Task RevokeAsync(string tokenHash)
         {
             const string query = @"
             UPDATE RefreshTokens
-            SET IsRevoked = 1, RevokedByIp = @RevokedByIp
+            SET IsRevoked = 1
             WHERE Token = @Token";
 
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@Token", tokenHash);
-            cmd.Parameters.AddWithValue("@RevokedByIp", (object?)revokedByIp ?? DBNull.Value);
+            cmd.Parameters.Add("@Token", SqlDbType.NVarChar, 256).Value = tokenHash;
 
             await conn.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
         }
 
-        public async Task MarkUsedAsync(string tokenHash)
-        {
-            const string query = "UPDATE RefreshTokens SET IsUsed = 1 WHERE Token = @Token";
-
-            using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@Token", tokenHash);
-
-            await conn.OpenAsync();
-            await cmd.ExecuteNonQueryAsync();
-        }
-
-        public async Task RevokeAllForUserAsync(Guid userId)
+        public async Task RevokeAllForUserAsync(int userId)
         {
             const string query = @"
             UPDATE RefreshTokens
@@ -104,7 +84,7 @@ namespace JWTAuthenticationAPI.Repository
 
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@UserId", userId);
+            cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = userId;
 
             await conn.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
