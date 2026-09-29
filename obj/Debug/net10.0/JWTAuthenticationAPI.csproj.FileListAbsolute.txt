@@ -66,3 +66,4 @@ C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\bin\Debug
 C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\bin\Debug\net10.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\bin\Debug\net10.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\JWTAuthenticationAPI.sourcelink.json
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

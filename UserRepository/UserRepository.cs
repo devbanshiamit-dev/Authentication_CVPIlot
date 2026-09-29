@@ -29,7 +29,7 @@ namespace JWTAuthenticationAPI.Repository
             command.Parameters.Add("@Email", SqlDbType.NVarChar, 256)
                 .Value = user.Email;
 
-            command.Parameters.Add("@PasswordHash", SqlDbType.NVarChar, -1)
+            command.Parameters.Add("@PasswordHash", SqlDbType.NVarChar, 500)
                 .Value = user.PasswordHash;
 
             await connection.OpenAsync();

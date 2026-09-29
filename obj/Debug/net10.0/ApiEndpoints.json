@@ -1,0 +1,92 @@
+[
+  {
+    "ContainingType": "JWTAuthenticationAPI.Controllers.UserController",
+    "Method": "GetAccessAsync",
+    "RelativePath": "api/User/access",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "refreshToken",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JWTAuthenticationAPI.Controllers.UserController",
+    "Method": "LoginAsync",
+    "RelativePath": "api/User/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "JWTAuthenticationAPI.DTOs.UserLoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JWTAuthenticationAPI.Controllers.UserController",
+    "Method": "CreateAsync",
+    "RelativePath": "api/User/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "JWTAuthenticationAPI.DTOs.UserRegistreRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JWTAuthenticationAPI.Controllers.UserController",
+    "Method": "RevokeTokenAsync",
+    "RelativePath": "api/User/Revoke",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "refreshToken",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JWTAuthenticationAPI.Controllers.UserController",
+    "Method": "RevokeAlltokenAsync",
+    "RelativePath": "api/User/revoke-from-all",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JWTAuthenticationAPI.Controllers.UserController",
+    "Method": "TokenRotateAsync",
+    "RelativePath": "api/User/token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "JWTAuthenticationAPI.DTOs.TokenRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

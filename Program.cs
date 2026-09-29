@@ -21,13 +21,6 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 var jwtService = new JWTService(builder.Configuration);
 
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = jwtService.CreateValidationParameters();
-    });
-
 var app = builder.Build();
 
 // Global exception handler - first in the pipeline.
@@ -41,7 +34,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseMiddleware<ValidationMiddleware>();
+
 app.UseAuthorization();
 
 app.MapControllers();
