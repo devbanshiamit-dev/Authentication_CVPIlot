@@ -80,7 +80,7 @@ namespace JWTAuthenticationAPI.JWT
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(key)),
+                Encoding.UTF8.GetBytes(key)),
                 ValidateIssuer = true,
                 ValidIssuer = issuer,
                 ValidateAudience = true,

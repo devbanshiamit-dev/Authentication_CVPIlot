@@ -16,10 +16,11 @@ namespace JWTAuthenticationAPI.Middlewares
             var Path = context.Request.Path;
 
             if (Method == HttpMethods.Post &&
-                Path.Equals("/user/login",StringComparison.OrdinalIgnoreCase) 
-                || Path.Equals("/user/register",StringComparison.OrdinalIgnoreCase))
+                (Path.Equals("/api/user/login", StringComparison.OrdinalIgnoreCase) 
+                || Path.Equals("/api/user/register",StringComparison.OrdinalIgnoreCase)))
             {
                 await _request(context);
+                return;
             }
             else
             {

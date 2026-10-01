@@ -1,9 +1,8 @@
-using JWTAuthenticationAPI.JWT;
+using JWTAuthenticationAPI.UserService;
 using JWTAuthenticationAPI.Middlewares;
 using JWTAuthenticationAPI.Repository;
 using JWTAuthenticationAPI.Services;
-using JWTAuthenticationAPI.UserService;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using JWTAuthenticationAPI.JWT;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,10 +22,8 @@ var jwtService = new JWTService(builder.Configuration);
 
 var app = builder.Build();
 
-// Global exception handler - first in the pipeline.
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
