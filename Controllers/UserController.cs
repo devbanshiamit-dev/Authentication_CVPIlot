@@ -16,35 +16,48 @@ namespace JWTAuthenticationAPI.Controllers
             _user = user;
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> CreateAsync(UserRegistreRequest request)
         {
             var Response = await _user.RegisterAsync(request);
             return Ok(Response);
         }
+
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(UserLoginRequest request)
         {
             var Response = await _user.LoginRequestAsync(request);
             return Ok(Response);
         }
+
+        [AllowAnonymous]
         [HttpPost("token")]
-        public async Task<IActionResult> TokenRotateAsync(TokenRequestDTO request)
+        public async Task<IActionResult> TokenRotateAsync([FromBody]RefreshTokenRequest request)
         {
-            var Response = await _user.RotateTokensAsync(request);
+            var Response = await _user.RotateTokensAsync(request.RefreshToken);
             return Ok(Response);
         }
+
+        [AllowAnonymous]
         [HttpGet("access")]
-        public async Task<IActionResult> GetAccessAsync(string refreshToken)
+        public async Task<IActionResult> GetAccessAsync(RefreshTokenRequest refresh)
         {
-            var responce = await _user.GetAccessTokenAsync(refreshToken);
+            var responce = await _user.GetAccessTokenAsync(refresh.RefreshToken);
             return Ok(responce);
         }
+
         [Authorize]
         [HttpDelete("Revoke")]
-        public async Task<IActionResult> RevokeTokenAsync(string refreshToken)
+        public async Task<IActionResult> RevokeTokenAsync([FromBody]RefreshTokenRequest refresh)
         {
-            await _user.RevokeToken(refreshToken);
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (!await _user.RevokeToken(refresh.RefreshToken, userId))
+            {
+                return Forbid();
+            }
             return NoContent();
         }
 

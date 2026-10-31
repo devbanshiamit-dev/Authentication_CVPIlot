@@ -1,5 +1,6 @@
 using JWTAuthenticationAPI.UserService;
 using JWTAuthenticationAPI.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using JWTAuthenticationAPI.Repository;
 using JWTAuthenticationAPI.Services;
 using JWTAuthenticationAPI.JWT;
@@ -18,6 +19,17 @@ builder.Services.AddScoped<JWTService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters =
+            new JWTService(builder.Configuration)
+                .CreateValidationParameters();
+    });
+
+builder.Services.AddAuthorization();
+
 var jwtService = new JWTService(builder.Configuration);
 
 var app = builder.Build();
@@ -31,7 +43,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseMiddleware<ValidationMiddleware>();
+app.UseAuthentication();
 
 app.UseAuthorization();
 

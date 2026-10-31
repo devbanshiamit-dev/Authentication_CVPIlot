@@ -83,7 +83,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "JWTAuthenticationAPI.DTOs.TokenRequestDTO",
+        "Type": "JWTAuthenticationAPI.DTOs.TokenRotationRequest",
         "IsRequired": true
       }
     ],

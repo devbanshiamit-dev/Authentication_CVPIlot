@@ -10,7 +10,7 @@ namespace JWTAuthenticationAPI.Repository
 
         public RefreshTokenRepository(IConfiguration config)
         {
-            _connectionString = config.GetConnectionString("DefaultConnection") 
+            _connectionString = config.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException("Connection String not Found");
         }
 
@@ -75,7 +75,9 @@ namespace JWTAuthenticationAPI.Repository
             cmd.Parameters.Add("@Token", SqlDbType.NVarChar, 256).Value = tokenHash;
 
             await conn.OpenAsync();
-            await cmd.ExecuteNonQueryAsync();
+            var rows = await cmd.ExecuteNonQueryAsync();
+
+            Console.WriteLine($"Rows affected: {rows}");
         }
 
         public async Task RevokeAllForUserAsync(int userId)
@@ -91,6 +93,77 @@ namespace JWTAuthenticationAPI.Repository
 
             await conn.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
+        }
+
+        public async Task<bool> RotateAsync(
+    string oldTokenHash,
+    RefreshToken newToken)
+        {
+            using var conn = new SqlConnection(_connectionString);
+
+            await conn.OpenAsync();
+
+            using var transaction = await conn.BeginTransactionAsync();
+
+            try
+            {
+                const string revokeQuery = @"
+            UPDATE RefreshTokens
+            SET IsRevoked = 1
+            WHERE Token = @Token
+              AND IsRevoked = 0
+              AND ExpiresAt > SYSUTCDATETIME()";
+
+                using var revokeCmd = new SqlCommand(
+                    revokeQuery,
+                    conn,
+                    (SqlTransaction)transaction);
+
+                revokeCmd.Parameters.Add("@Token", SqlDbType.NVarChar, 256)
+                    .Value = oldTokenHash;
+
+                var rows = await revokeCmd.ExecuteNonQueryAsync();
+
+                if (rows != 1)
+                {
+                    await transaction.RollbackAsync();
+                    return false;
+                }
+
+                const string insertQuery = @"
+            INSERT INTO RefreshTokens
+                (UserId, Token, IsRevoked, ExpiresAt)
+            VALUES
+                (@UserId, @Token, @IsRevoked, @ExpiresAt)";
+
+                using var insertCmd = new SqlCommand(
+                    insertQuery,
+                    conn,
+                    (SqlTransaction)transaction);
+
+                insertCmd.Parameters.Add("@UserId", SqlDbType.Int)
+                    .Value = newToken.UserId;
+
+                insertCmd.Parameters.Add("@Token", SqlDbType.NVarChar, 256)
+                    .Value = newToken.Token;
+
+                insertCmd.Parameters.Add("@IsRevoked", SqlDbType.Bit)
+                    .Value = newToken.IsRevoked;
+
+                insertCmd.Parameters.Add("@ExpiresAt", SqlDbType.DateTime)
+                    .Value = newToken.ExpiresAt;
+
+                await insertCmd.ExecuteNonQueryAsync();
+
+                await transaction.CommitAsync();
+
+                return true;
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
     }
 }

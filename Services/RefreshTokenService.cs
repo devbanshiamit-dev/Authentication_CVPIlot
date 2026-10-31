@@ -73,6 +73,8 @@ namespace JWTAuthenticationAPI.Services
 
             var hashed = Hash(rawToken);
             var refreshToken = await _repo.GetByTokenAsync(hashed);
+            
+
             if (refreshToken == null)
             {
                 throw new NotFoundException("Token Not Found In DB");
@@ -87,18 +89,36 @@ namespace JWTAuthenticationAPI.Services
             if (stored == null)
                 throw new UnauthorizedException("Token Is Invalid Or Expired");
 
-            await RevokeAsync(oldRawToken);
-            return await GenerateAndStoreAsync(stored.UserId);
+            var rawToken = _Jwt.GenerateRefreshToken();
+
+            var newToken = new RefreshToken
+            {
+                UserId = stored.UserId,
+                Token = Hash(rawToken),
+                IsRevoked = false,
+                CreatedAt = DateTime.UtcNow,
+                ExpiresAt = DateTime.UtcNow.AddDays(_refreshTokenDays)
+            };
+
+            var success = await _repo.RotateAsync(
+                stored.Token,
+                newToken
+            );
+
+            if (!success)
+                throw new UnauthorizedException("Token Is Invalid, Expired Or Already Used");
+
+            return rawToken;
         }
 
-        public async Task RevokeAsync(string rawToken)
+        public async Task RevokeAsync(string rowToken)
         {
-            if (string.IsNullOrWhiteSpace(rawToken))
+            if (string.IsNullOrWhiteSpace(rowToken))
             {
                 throw new BadRequestException("Refresh token is required.");
             }
-            var hashed = Hash(rawToken);
-            await _repo.RevokeAsync(hashed);
+
+            await _repo.RevokeAsync(rowToken);
         }
 
         public async Task RevokeAllForUserAsync(int userId)

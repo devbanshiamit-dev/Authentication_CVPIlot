@@ -7,9 +7,9 @@ namespace JWTAuthenticationAPI.UserService
     {
         Task<ServerResponse> RegisterAsync(UserRegistreRequest user);
         Task<ServerResponse> LoginRequestAsync(UserLoginRequest dto);
-        Task<ServerResponse> RotateTokensAsync(TokenRequestDTO dTO);
+        Task<ServerResponse> RotateTokensAsync(string refreshToken);
         Task<string> GetAccessTokenAsync(string refreshToken);
-        Task RevokeToken(string refreshToken);
+        Task<bool> RevokeToken(string refreshToken, int userid);
         Task RevokeAllRefreshTokensAsync(int userId);
     }
 }

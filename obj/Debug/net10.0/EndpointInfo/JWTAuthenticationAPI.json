@@ -86,17 +86,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TokenRequestDTO"
+                "$ref": "#/components/schemas/TokenRotationRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TokenRequestDTO"
+                "$ref": "#/components/schemas/TokenRotationRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TokenRequestDTO"
+                "$ref": "#/components/schemas/TokenRotationRequest"
               }
             }
           },
@@ -166,17 +166,13 @@
   },
   "components": {
     "schemas": {
-      "TokenRequestDTO": {
+      "TokenRotationRequest": {
         "required": [
-          "refreshToken",
-          "accessToken"
+          "refreshToken"
         ],
         "type": "object",
         "properties": {
           "refreshToken": {
-            "type": "string"
-          },
-          "accessToken": {
             "type": "string"
           }
         }

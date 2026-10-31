@@ -8,5 +8,6 @@ namespace JWTAuthenticationAPI.Repository
         Task<RefreshToken?> GetByTokenAsync(string tokenHash);
         Task RevokeAsync(string tokenHash);
         Task RevokeAllForUserAsync(int userId);
+        Task<bool> RotateAsync(string oldTokenHash, RefreshToken newToken);
     }
 }

@@ -1,0 +1,12 @@
+# Directories to ignore
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/.git/
+**/node_modules/
+
+# Files to ignore
+*.user
+*.suo
+*.sln.docstates

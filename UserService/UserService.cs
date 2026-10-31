@@ -77,10 +77,10 @@ namespace JWTAuthenticationAPI.UserService
         }
 
         //Token Rotation
-        public async Task<ServerResponse> RotateTokensAsync(TokenRequestDTO dTO)
+        public async Task<ServerResponse> RotateTokensAsync(string refreshToken)
         {
             var storedToken =
-                await _refreshTokenService.GetTokenByTokenAsync(dTO.RefreshToken);
+                await _refreshTokenService.GetTokenByTokenAsync(refreshToken);
 
             if (storedToken.IsRevoked)
                 throw new UnauthorizedException("Token Is Revoked");
@@ -91,10 +91,8 @@ namespace JWTAuthenticationAPI.UserService
             User stored = await _repo.GetByIdAsync(storedToken.UserId)
                 ?? throw new NotFoundException("Failed to find user for this token");
 
-            await _refreshTokenService.RevokeAsync(dTO.RefreshToken);
-
             var refreshtoken =
-                await _refreshTokenService.GenerateAndStoreAsync(stored.UserId);
+                await _refreshTokenService.RotateAsync(refreshToken);
 
             var access =
                 await _refreshTokenService.GenerateAccessTokenAsync(stored.Email, stored.UserId);
@@ -126,9 +124,15 @@ namespace JWTAuthenticationAPI.UserService
             return access;
         }
 
-        public async Task RevokeToken(string refreshToken)
+        public async Task<bool> RevokeToken(string refreshToken, int userid)
         {
+            var existedToken = await _refreshTokenService.GetTokenByTokenAsync(refreshToken);
+            if (existedToken.UserId != userid)
+            {
+                return false;
+            }
             await _refreshTokenService.RevokeAsync(refreshToken);
+            return true;
         }
 
         public async Task RevokeAllRefreshTokensAsync(int userId)
