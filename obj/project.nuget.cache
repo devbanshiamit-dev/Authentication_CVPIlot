@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Rq9GI+dZHw4=",
+  "dgSpecHash": "QX1UoSPb1ps=",
   "success": true,
   "projectFilePath": "C:\\Users\\Lenovo\\source\\repos\\JWTAuthenticationAPI\\JWTAuthenticationAPI\\JWTAuthenticationAPI.csproj",
   "expectedPackageFiles": [
@@ -22,7 +22,7 @@
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.configuration.configurationmanager\\9.0.18\\system.configuration.configurationmanager.9.0.18.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.23.0\\system.identitymodel.tokens.jwt.8.23.0.nupkg.sha512",
-    "C:\\Users\\Lenovo\\.nuget\\packages\\system.security.cryptography.pkcs\\9.0.18\\system.security.cryptography.pkcs.9.0.18.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\system.security.cryptography.pkcs\\10.0.13\\system.security.cryptography.pkcs.10.0.13.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.18\\system.security.cryptography.protecteddata.9.0.18.nupkg.sha512"
   ],
   "logs": []

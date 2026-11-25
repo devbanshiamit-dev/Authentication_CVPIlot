@@ -8,9 +8,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "refreshToken",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "refresh",
+        "Type": "JWTAuthenticationAPI.DTOs.RefreshTokenRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -56,9 +56,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "refreshToken",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "refresh",
+        "Type": "JWTAuthenticationAPI.DTOs.RefreshTokenRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -75,6 +75,16 @@
   },
   {
     "ContainingType": "JWTAuthenticationAPI.Controllers.UserController",
+    "Method": "Test",
+    "RelativePath": "api/User/test",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JWTAuthenticationAPI.Controllers.UserController",
     "Method": "TokenRotateAsync",
     "RelativePath": "api/User/token",
     "HttpMethod": "POST",
@@ -83,7 +93,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "JWTAuthenticationAPI.DTOs.TokenRotationRequest",
+        "Type": "JWTAuthenticationAPI.DTOs.RefreshTokenRequest",
         "IsRequired": true
       }
     ],

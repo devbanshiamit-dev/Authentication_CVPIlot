@@ -19,6 +19,16 @@ builder.Services.AddScoped<JWTService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+const string DevCors = "DashboardDev";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(DevCors, policy =>
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
+
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -30,8 +40,6 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
-var jwtService = new JWTService(builder.Configuration);
-
 var app = builder.Build();
 
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
@@ -42,6 +50,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(DevCors);
 
 app.UseAuthentication();
 

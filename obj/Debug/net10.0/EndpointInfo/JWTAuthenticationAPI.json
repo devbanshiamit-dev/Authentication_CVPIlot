@@ -13,6 +13,18 @@
     }
   ],
   "paths": {
+    "/api/User/test": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/User/register": {
       "post": {
         "tags": [
@@ -86,17 +98,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TokenRotationRequest"
+                "$ref": "#/components/schemas/RefreshTokenRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TokenRotationRequest"
+                "$ref": "#/components/schemas/RefreshTokenRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TokenRotationRequest"
+                "$ref": "#/components/schemas/RefreshTokenRequest"
               }
             }
           },
@@ -114,15 +126,26 @@
         "tags": [
           "User"
         ],
-        "parameters": [
-          {
-            "name": "refreshToken",
-            "in": "query",
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequest"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -135,15 +158,26 @@
         "tags": [
           "User"
         ],
-        "parameters": [
-          {
-            "name": "refreshToken",
-            "in": "query",
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequest"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -166,10 +200,7 @@
   },
   "components": {
     "schemas": {
-      "TokenRotationRequest": {
-        "required": [
-          "refreshToken"
-        ],
+      "RefreshTokenRequest": {
         "type": "object",
         "properties": {
           "refreshToken": {

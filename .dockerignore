@@ -1,12 +1,40 @@
-# Directories to ignore
-**/bin/
-**/obj/
-**/.vs/
-**/.vscode/
-**/.git/
-**/node_modules/
 
-# Files to ignore
+# Git
+.git/
+.gitignore
+
+# Visual Studio
+.vs/
+.vscode/
 *.user
 *.suo
-*.sln.docstates
+
+# Build outputs
+**/bin/
+**/obj/
+**/out/
+
+# Test results
+**/TestResults/
+**/coverage/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+**/secrets.json
+**/appsettings.Development.json
+**/appsettings.Production.json
+
+# Logs
+**/*.log
+**/logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Documentation
+README.md
+LICENSE

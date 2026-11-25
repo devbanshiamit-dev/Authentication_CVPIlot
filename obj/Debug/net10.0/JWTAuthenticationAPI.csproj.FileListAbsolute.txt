@@ -66,3 +66,17 @@ C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\bin\Debug
 C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\bin\Debug\net10.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\bin\Debug\net10.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\JWTAuthenticationAPI.sourcelink.json
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\bin\Debug\net10.0\JWTAuthenticationAPI.staticwebassets.runtime.json
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\bin\Debug\net10.0\JWTAuthenticationAPI.runtimeconfig.dev.json
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\HotReload\Microsoft.NET.Sdk.BlazorWeb.HotReload.lib.module.js
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\HotReload\Microsoft.NET.Sdk.BlazorWeb.HotReload.BrowserTools.js
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\HotReload\Microsoft.NET.Sdk.BlazorWeb.HotReload.BrowserTools.Config.js
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\HotReload\browser-tools-key.public.json
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\HotReload\browser-tools-key.private.json
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\jsmodules\jsmodules.build.manifest.json
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\scopedcss\scopedcss.cache
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\compressed\ffptf1n56a-{0}-tchfgznwy8-tchfgznwy8.gz
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\compressed\f8d937vcon-{0}-gxjygstsqt-gxjygstsqt.gz
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\compressed\3bde7pdcaq-{0}-v1vy2to33n-v1vy2to33n.gz
+C:\Users\Lenovo\source\repos\JWTAuthenticationAPI\JWTAuthenticationAPI\obj\Debug\net10.0\compressed\sro3943vxl-{0}-ysew0n4kjn-ysew0n4kjn.gz
